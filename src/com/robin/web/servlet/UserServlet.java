@@ -120,51 +120,78 @@ public class UserServlet extends BaseServlet{
 		String birthday = request.getParameter("birthday");
 		String vcode = request.getParameter("vcode");
 		
-		Map<String, String[]> params = request.getParameterMap();
-		User user = new User();
-		BeanUtils.populate(user, params);
 		
-		System.out.println("[UserServlet][regist]:user:"+user);
-		
-		//TODO:校验验证码
-		
-		//TODO:校验是否有重复的username
-
-		//校验username/password/email是否为空
-		if(User.checkUserVaild(user) != true){
-			request.setAttribute("msg", "注册失败!用户名/密码/email地址/姓名/生日不能为空!");
-			return "/jsp/register.jsp";
-		}
-		
-		//校验两次密码是否一样
-		if(password.equals(re_password) != true)
+		String form_commit_id = request.getParameter("form_commit_id");
+		String session_commit_id = (String)request.getSession().getAttribute("session_commit_id");
+		boolean valid_commit_flag = false;
+		if(session_commit_id != null )
 		{
-			request.setAttribute("msg", "注册失败!两次输入的密码不一致!");
-			return "/jsp/register.jsp";
+			valid_commit_flag = session_commit_id.equals(form_commit_id);
 		}
-		user.setUid(UUIDUtils.getId());
-		user.setCode(UUIDUtils.getCode());
-		UserService service = new UserServiceImpl();
-		boolean ret = false;
-		try {
-			ret = service.regist(user);
-		} catch (SQLException | MessagingException e) {
-			e.printStackTrace();
-			request.setAttribute("msg", "服务器异常");
-			return "/jsp/msg.jsp";
-		}
-
-		if(ret)
+		if(valid_commit_flag == true)//说明是不是重复提交
 		{
-			//注册成功
-			request.setAttribute("msg", "注册成功!赶快去邮箱激活吧~~~");
-			return "/jsp/msg.jsp";
+			System.out.println("[UserServlet][regist]:不是重复提交");
 		}
 		else {
-			//注册失败
-			request.setAttribute("msg", "注册失败!请重新注册!");
+			System.out.println("[UserServlet][regist]:重复提交");
+		}
+		
+		
+		if(valid_commit_flag == true)
+		{
+			request.getSession().removeAttribute("session_commit_id");
+			Map<String, String[]> params = request.getParameterMap();
+			User user = new User();
+			BeanUtils.populate(user, params);
+			
+			System.out.println("[UserServlet][regist]:user:"+user);
+			
+			//TODO:校验验证码
+			
+			//TODO:校验是否有重复的username
+
+			//校验username/password/email是否为空
+			if(User.checkUserVaild(user) != true){
+				request.setAttribute("msg", "注册失败!用户名/密码/email地址/姓名/生日不能为空!");
+				return "/jsp/register.jsp";
+			}
+			
+			//校验两次密码是否一样
+			if(password.equals(re_password) != true)
+			{
+				request.setAttribute("msg", "注册失败!两次输入的密码不一致!");
+				return "/jsp/register.jsp";
+			}
+			user.setUid(UUIDUtils.getId());
+			user.setCode(UUIDUtils.getCode());
+			UserService service = new UserServiceImpl();
+			boolean ret = false;
+			try {
+				ret = service.regist(user);
+			} catch (SQLException | MessagingException e) {
+				e.printStackTrace();
+				request.setAttribute("msg", "服务器异常");
+				return "/jsp/msg.jsp";
+			}
+
+			if(ret)
+			{
+				//注册成功
+				request.setAttribute("msg", "注册成功!赶快去邮箱激活吧~~~");
+				return "/jsp/msg.jsp";
+			}
+			else {
+				//注册失败
+				request.setAttribute("msg", "注册失败!请重新注册!");
+				return "/jsp/msg.jsp";
+			}
+		}
+		else
+		{
+			request.setAttribute("msg", "上一次操作已完结,请勿直接刷新页面");
 			return "/jsp/msg.jsp";
 		}
+		
 	}
 	
 	public String active(HttpServletRequest request,HttpServletResponse response) throws IOException {

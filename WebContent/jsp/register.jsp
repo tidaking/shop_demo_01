@@ -99,7 +99,12 @@ font {
 			</div>
 
 
-
+<%@ page language="java" import="java.util.*"%>  
+<%  
+ 	double d = Math.random();  
+	String session_commit_id = Double.toString(d);  
+	session.setAttribute("session_commit_id",session_commit_id);  
+%>
 
 
 <div class="container" style="width:100%;background:url('${pageContext.request.contextPath}/image/regist_bg.jpg');">
@@ -114,6 +119,7 @@ font {
 		<font>会员注册</font>USER REGISTER
 		<form class="form-horizontal" style="margin-top:5px;" method="post" action="${pageContext.request.contextPath }/userServlet">
 			<input type="hidden" name="method" value="regist">
+			<input type="hidden" name="form_commit_id" value="<%=session_commit_id%>"> 
 			 <div class="form-group">
 			    <label for="username" class="col-sm-2 control-label">用户名</label>
 			    <div class="col-sm-6">
