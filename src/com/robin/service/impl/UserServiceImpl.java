@@ -1,5 +1,6 @@
 package com.robin.service.impl;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.mail.MessagingException;
@@ -13,7 +14,7 @@ import com.robin.dao.impl.UserDaoImpl;
 import com.robin.service.UserService;
 
 public class UserServiceImpl implements UserService {
-
+	
 	@Override
 	public User login(String username, String password) throws SQLException {
 		UserDao dao = new UserDaoImpl();
@@ -24,11 +25,17 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean regist(User user) throws SQLException{
 		UserDao dao = new UserDaoImpl();
-		int update = dao.saveUser(user);
+		
+		
+		
+		
+		//int update = dao.saveUser(user);
+		int update = dao.saveUserInTransAction(user);
 		if(update != 1)
 		{
 			//注册失败
 			System.out.println("[UserService][regist]:regist faild!ret="+update);
+			dao.rollback();
 			return false;
 		}
 		else
@@ -42,9 +49,11 @@ public class UserServiceImpl implements UserService {
 			} catch (MessagingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				System.out.println("[UserService][regist]:Email send faild!");
+				dao.rollback();
+				System.out.println("[UserService][regist]:Email send faild!RollBack!");
 				return false;
 			}
+			dao.commit();
 			System.out.println("[UserService][regist]:Email send success!");
 			return true;
 		}
