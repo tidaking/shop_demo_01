@@ -25,10 +25,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean regist(User user) throws SQLException{
 		UserDao dao = new UserDaoImpl();
-		
-		
-		
-		
+
 		//int update = dao.saveUser(user);
 		int update = dao.saveUserInTransAction(user);
 		if(update != 1)

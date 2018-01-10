@@ -27,7 +27,12 @@ public class BaseServlet extends HttpServlet {
 			// 3.找到这个子类的特定方法
 			Method method = clazz.getMethod(method_name,HttpServletRequest.class,HttpServletResponse.class);
 			// 4.通过反射,子类调用自己的方法,获取需要转发的路径
-			String path = (String)method.invoke(this, request,response);
+			String path = null;
+			if(method != null)
+			{
+				path = (String)method.invoke(this, request,response);
+			}
+			
 			// 5.如果方法有返回一个路径,就转发过去.否则由方法自行解决
 			if(path != null)
 			{

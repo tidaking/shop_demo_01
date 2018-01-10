@@ -163,7 +163,7 @@ public class UserServlet extends BaseServlet{
 		else {
 			//注册失败
 			request.setAttribute("msg", "注册失败!请重新注册!");
-			return "/jsp/register.jsp";
+			return "/jsp/msg.jsp";
 		}
 	}
 	
