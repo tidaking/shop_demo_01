@@ -23,10 +23,10 @@ DROP TABLE IF EXISTS `category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `category` (
-  `cid` varchar(32) NOT NULL,
-  `cname` varchar(20) DEFAULT NULL,
+  `cid` VARCHAR(32) NOT NULL,
+  `cname` VARCHAR(20) DEFAULT NULL,
   PRIMARY KEY (`cid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,17 +47,15 @@ DROP TABLE IF EXISTS `orderitem`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `orderitem` (
-  `itemid` varchar(32) NOT NULL,
-  `count` int(11) DEFAULT NULL,
-  `subtotal` double DEFAULT NULL,
-  `pid` varchar(32) DEFAULT NULL,
-  `oid` varchar(32) DEFAULT NULL,
+  `itemid` VARCHAR(32) NOT NULL,
+  `count` INT(11) DEFAULT NULL,
+  `subtotal` DOUBLE DEFAULT NULL,
+  `pid` VARCHAR(32) DEFAULT NULL,
+  `oid` VARCHAR(32) DEFAULT NULL,
   PRIMARY KEY (`itemid`),
   KEY `fk_0001` (`pid`),
-  KEY `fk_0002` (`oid`),
-  CONSTRAINT `fk_0001` FOREIGN KEY (`pid`) REFERENCES `product` (`pid`),
-  CONSTRAINT `fk_0002` FOREIGN KEY (`oid`) REFERENCES `orders` (`oid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `fk_0002` (`oid`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,16 +75,16 @@ DROP TABLE IF EXISTS `orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `orders` (
-  `oid` varchar(32) NOT NULL,
-  `ordertime` datetime DEFAULT NULL,
-  `total` double DEFAULT NULL,
-  `state` int(11) DEFAULT NULL,
-  `address` varchar(30) DEFAULT NULL,
-  `name` varchar(20) DEFAULT NULL,
-  `telephone` varchar(20) DEFAULT NULL,
-  `uid` varchar(32) DEFAULT NULL,
+  `oid` VARCHAR(32) NOT NULL,
+  `ordertime` DATETIME DEFAULT NULL,
+  `total` DOUBLE DEFAULT NULL,
+  `state` INT(11) DEFAULT NULL,
+  `address` VARCHAR(30) DEFAULT NULL,
+  `name` VARCHAR(20) DEFAULT NULL,
+  `telephone` VARCHAR(20) DEFAULT NULL,
+  `uid` VARCHAR(32) DEFAULT NULL,
   PRIMARY KEY (`oid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,20 +104,19 @@ DROP TABLE IF EXISTS `product`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `product` (
-  `pid` varchar(32) NOT NULL,
-  `pname` varchar(50) DEFAULT NULL,
-  `market_price` double DEFAULT NULL,
-  `shop_price` double DEFAULT NULL,
-  `pimage` varchar(200) DEFAULT NULL,
-  `pdate` date DEFAULT NULL,
-  `is_hot` int(11) DEFAULT NULL,
-  `pdesc` varchar(255) DEFAULT NULL,
-  `pflag` int(11) DEFAULT NULL,
-  `cid` varchar(32) DEFAULT NULL,
+  `pid` VARCHAR(32) NOT NULL,
+  `pname` VARCHAR(50) DEFAULT NULL,
+  `market_price` DOUBLE DEFAULT NULL,
+  `shop_price` DOUBLE DEFAULT NULL,
+  `pimage` VARCHAR(200) DEFAULT NULL,
+  `pdate` DATE DEFAULT NULL,
+  `is_hot` INT(11) DEFAULT NULL,
+  `pdesc` VARCHAR(255) DEFAULT NULL,
+  `pflag` INT(11) DEFAULT NULL,
+  `cid` VARCHAR(32) DEFAULT NULL,
   PRIMARY KEY (`pid`),
-  KEY `sfk_0001` (`cid`),
-  CONSTRAINT `sfk_0001` FOREIGN KEY (`cid`) REFERENCES `category` (`cid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `sfk_0001` (`cid`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -140,18 +137,18 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
-  `uid` varchar(32) NOT NULL,
-  `username` varchar(20) DEFAULT NULL,
-  `password` varchar(20) DEFAULT NULL,
-  `name` varchar(20) DEFAULT NULL,
-  `email` varchar(30) DEFAULT NULL,
-  `telephone` varchar(20) DEFAULT NULL,
-  `birthday` date DEFAULT NULL,
-  `sex` varchar(10) DEFAULT NULL,
-  `state` int(11) DEFAULT NULL,
-  `code` varchar(64) DEFAULT NULL,
+  `uid` VARCHAR(32) NOT NULL,
+  `username` VARCHAR(20) DEFAULT NULL,
+  `password` VARCHAR(20) DEFAULT NULL,
+  `name` VARCHAR(20) DEFAULT NULL,
+  `email` VARCHAR(30) DEFAULT NULL,
+  `telephone` VARCHAR(20) DEFAULT NULL,
+  `birthday` DATE DEFAULT NULL,
+  `sex` VARCHAR(10) DEFAULT NULL,
+  `state` INT(11) DEFAULT NULL,
+  `code` VARCHAR(64) DEFAULT NULL,
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -163,6 +160,7 @@ LOCK TABLES `user` WRITE;
 INSERT INTO `user` VALUES ('373eb242933b4f5ca3bd43503c34668b','ccc','ccc','aaa','bbb@store.com','15723689921','2015-11-04','男',0,'9782f3e837ff422b9aee8b6381ccf927bdd9d2ced10d48f4ba4b9f187edf7738'),('3ca76a75e4f64db2bacd0974acc7c897','bb','bb','张三','bbb@store.com','15723689921','1990-02-01','男',0,'1258e96181a9457987928954825189000bae305094a042d6bd9d2d35674684e6'),('62145f6e66ea4f5cbe7b6f6b954917d3','cc','cc','张三','bbb@store.com','15723689921','2015-11-03','男',0,'19f100aa81184c03951c4b840a725b6a98097aa1106a4a38ba1c29f1a496c231'),('c95b15a864334adab3d5bb6604c6e1fc','bbb','bbb','老王','bbb@store.com','15712344823','2000-02-01','男',0,'71a3a933353347a4bcacff699e6baa9c950a02f6b84e4f6fb8404ca06febfd6f'),('f55b7d3a352a4f0782c910b2c70f1ea4','aaa','aaa','小王','aaa@store.com','15712344823','2000-02-01','男',1,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -174,3 +172,10 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2016-03-03  0:08:34
+
+/*add by Robin begin*/
+ALTER TABLE orders ADD CONSTRAINT orders2user_fk_uid FOREIGN KEY(uid)REFERENCES USER(uid);
+ALTER TABLE orderitem ADD CONSTRAINT orderitem2orders_fk_oid FOREIGN KEY(oid)REFERENCES orders(oid);
+ALTER TABLE orderitem ADD CONSTRAINT orderitem2orders_fk_pid FOREIGN KEY(pid)REFERENCES product(pid);
+ALTER TABLE product ADD CONSTRAINT product2category_fk_cid FOREIGN KEY(cid)REFERENCES category(cid);
+/*add by Robin end*/
