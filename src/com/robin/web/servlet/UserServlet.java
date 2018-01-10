@@ -56,13 +56,8 @@ public class UserServlet extends BaseServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		//reserve for vcode check
-//		if(vcode != xxx)
-//		{
-//			
-//		}
-		
+
+		//TODO:校验验证码
 		// 1.检查用户名和密码是否匹配
 		if(user != null)
 		{

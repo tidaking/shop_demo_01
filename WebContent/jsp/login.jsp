@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!doctype html>
 <html>
 <head>
@@ -35,7 +36,7 @@ font {
  </style>
 </head>
 <body>
-	
+
 	
 	
 	
@@ -146,7 +147,12 @@ font {
           <input type="checkbox" name="auto_login"> 自动登录
         </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <label>
-          <input type="checkbox" name="rem"> 记住用户名
+			<c:if test="${empty cookie.username.value }">
+							<input type="checkbox" name="rem" > 记住用户名
+			</c:if>
+			<c:if test="${not empty cookie.username.value }">
+				<input type="checkbox" name="rem" checked="checked"> 记住用户名
+			</c:if>
         </label>
       </div>
     </div>
