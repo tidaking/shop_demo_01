@@ -35,19 +35,19 @@ public class UserServlet extends BaseServlet{
 		System.out.println("[UserServlet]regist UI");
 		return "/jsp/register.jsp";	
 	}
-	
 
-	
+
+
 	// 登录 
 	public String login(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		System.out.println("[UserServlet]login");
-		
+
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String vcode = request.getParameter("vcode");
 		String auto_login = request.getParameter("auto_login");
 		String rem = request.getParameter("rem");
-		
+
 		UserService service = new UserServiceImpl();
 		User user = null;
 		try {
@@ -78,11 +78,11 @@ public class UserServlet extends BaseServlet{
 				}
 				response.addCookie(username_cookie);
 				// 4.检查是否自动登录(保留)
-				
+
 				// 5.保存用户登录状态
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
-				
+
 				// 6.跳转到首页
 				response.sendRedirect(request.getContextPath()+"/jsp/index.jsp");
 				return null;
@@ -101,7 +101,7 @@ public class UserServlet extends BaseServlet{
 			return "/jsp/login.jsp";
 		}
 	}
-	
+
 	public String logout(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
 		session.removeAttribute("user");
@@ -109,7 +109,7 @@ public class UserServlet extends BaseServlet{
 		response.sendRedirect(request.getContextPath()+"/jsp/index.jsp");
 		return null;
 	}
-	
+
 	public String regist(HttpServletRequest request,HttpServletResponse response) throws IllegalAccessException, InvocationTargetException {
 		String password = request.getParameter("password");
 		String re_password = request.getParameter("re_password");
@@ -119,15 +119,19 @@ public class UserServlet extends BaseServlet{
 		String sex = request.getParameter("sex");
 		String birthday = request.getParameter("birthday");
 		String vcode = request.getParameter("vcode");
-		
-		
+
+
 		String form_commit_id = request.getParameter("form_commit_id");
 		String session_commit_id = (String)request.getSession().getAttribute("session_commit_id");
+
+		System.out.println("form_commit_id:"+form_commit_id);
+		System.out.println("session_commit_id:"+session_commit_id);
 		boolean valid_commit_flag = false;
 		if(session_commit_id != null )
 		{
 			valid_commit_flag = session_commit_id.equals(form_commit_id);
 		}
+
 		if(valid_commit_flag == true)//说明是不是重复提交
 		{
 			System.out.println("[UserServlet][regist]:不是重复提交");
@@ -135,19 +139,19 @@ public class UserServlet extends BaseServlet{
 		else {
 			System.out.println("[UserServlet][regist]:重复提交");
 		}
-		
-		
+
+
 		if(valid_commit_flag == true)
 		{
 			request.getSession().removeAttribute("session_commit_id");
 			Map<String, String[]> params = request.getParameterMap();
 			User user = new User();
 			BeanUtils.populate(user, params);
-			
+
 			System.out.println("[UserServlet][regist]:user:"+user);
-			
+
 			//TODO:校验验证码
-			
+
 			//TODO:校验是否有重复的username
 
 			//校验username/password/email是否为空
@@ -155,7 +159,7 @@ public class UserServlet extends BaseServlet{
 				request.setAttribute("msg", "注册失败!用户名/密码/email地址/姓名/生日不能为空!");
 				return "/jsp/register.jsp";
 			}
-			
+
 			//校验两次密码是否一样
 			if(password.equals(re_password) != true)
 			{
@@ -191,9 +195,9 @@ public class UserServlet extends BaseServlet{
 			request.setAttribute("msg", "上一次操作已完结,请勿直接刷新页面");
 			return "/jsp/msg.jsp";
 		}
-		
+
 	}
-	
+
 	public String active(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		String code = request.getParameter("code");
 		
@@ -206,7 +210,7 @@ public class UserServlet extends BaseServlet{
 			request.setAttribute("msg", "服务器异常!");
 			return "/jsp/msg.jsp";
 		}
-		
+
 		if(ret != false)
 		{
 			//激活成功
@@ -220,7 +224,4 @@ public class UserServlet extends BaseServlet{
 			return "/jsp/msg.jsp";
 		}
 	}
-	
-	
-	
 }

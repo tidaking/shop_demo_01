@@ -28,9 +28,9 @@
 				</div>
 				<div class="col-md-3" style="padding-top:20px">
 					<ol class="list-inline">
-						<li><a href="">登录</a></li>
-						<li><a href="">注册</a></li>
-						<li><a href="">购物车</a></li>
+						<li><a href="#">登录</a></li>
+						<li><a href="#">注册</a></li>
+						<li><a href="#">购物车</a></li>
 					</ol>
 				</div>
 			</div>
@@ -90,7 +90,7 @@
 		
 				<div style="text-align: center;margin-top: 5px;">
 					<ul class="list-inline">
-						<li><a href="info.html">关于我们</a></li>
+						<li><a href="#">关于我们</a></li>
 						<li><a>联系我们</a></li>
 						<li><a>招贤纳士</a></li>
 						<li><a>法律声明</a></li>

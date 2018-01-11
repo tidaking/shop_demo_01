@@ -24,15 +24,30 @@ public class BaseServlet extends HttpServlet {
 			System.out.println("method name:"+method_name);
 			// 2.获取子类的字节码文件对象
 			Class clazz = this.getClass();
-			// 3.找到这个子类的特定方法
-			Method method = clazz.getMethod(method_name,HttpServletRequest.class,HttpServletResponse.class);
+			Method method = null;
+			if(clazz != null)
+			{
+				// 3.找到这个子类的特定方法
+				if(method_name != null)
+				{
+					method = clazz.getMethod(method_name,HttpServletRequest.class,HttpServletResponse.class);
+				}
+				else
+				{
+					System.out.println("[BaseServlet]:method = null!Redirect to index.jsp");
+					response.sendRedirect(request.getContextPath()+"/jsp/index.jsp");
+				}
+			}
+			else
+			{
+				System.out.println("[BaseServlet]:Not Found Class!");
+			}
 			// 4.通过反射,子类调用自己的方法,获取需要转发的路径
 			String path = null;
 			if(method != null)
 			{
 				path = (String)method.invoke(this, request,response);
 			}
-			
 			// 5.如果方法有返回一个路径,就转发过去.否则由方法自行解决
 			if(path != null)
 			{
@@ -43,5 +58,4 @@ public class BaseServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
 }
