@@ -8,6 +8,7 @@
 </head>
 <body>
 <!--重定向到网站首页  -->
-<%response.sendRedirect(request.getContextPath()+"/jsp/index.jsp"); %>
+<%-- <%response.sendRedirect(request.getContextPath()+"/jsp/index.jsp"); %> --%>
+<%request.getRequestDispatcher("/index?method=gotoIndex").forward(request, response); %>
 </body>
 </html>

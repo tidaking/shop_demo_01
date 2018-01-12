@@ -19,6 +19,9 @@ public class BaseServlet extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			// 0.解决响应乱码问题
+			response.setContentType("text/html;charset=utf-8");
+			
 			// 1.获取方法名
 			String method_name = request.getParameter("method");
 			System.out.println("method name:"+method_name);

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html>
 
@@ -94,8 +95,19 @@
 					<li><a href="#">首页</a></li>
 				</ol>
 			</div>
+			
+			<c:forEach items="${page.list }" var="p">
+				<div class="col-md-2">
+					<a href="product_info.htm">
+						<img src="${pageContext.request.contextPath}/${p.pimage}" width="170" height="170" style="display: inline-block;">
+					</a>
+					<p><a href="product_info.html" style='color:green'>${p.pname}</a></p>
+					<p><font color="#FF0000">商城价：&yen;${p.shop_price}</font></p>
+				</div>
+			</c:forEach>
+			
 
-			<div class="col-md-2">
+			<%-- <div class="col-md-2">
 				<a href="product_info.htm">
 					<img src="${pageContext.request.contextPath}/products/1/cs10001.jpg" width="170" height="170" style="display: inline-block;">
 				</a>
@@ -183,28 +195,61 @@
 				</a>
 				<p><a href="product_info.html" style='color:green'>土豆</a></p>
 				<p><font color="#FF0000">商城价：&yen;299.00</font></p>
-			</div>
+			</div> --%>
 
 		</div>
 
 		<!--分页 -->
 		<div style="width:380px;margin:0 auto;margin-top:50px;">
 			<ul class="pagination" style="text-align:center; margin-top:10px;">
-				<li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-				<li class="active"><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
+				<c:if test="${page.curPage == 1}">
+					<li class="disabled">
+						<a href="javascript:void(0)" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+				</c:if>
+				<c:if test="${page.curPage != 1}">
+					<li>
+						<a href="${pageContext.request.contextPath}/product?method=findByCidInPages&curPage=${page.curPage-1}&cid=${param.cid}" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+				</c:if>
+				
+				<!-- <li class="active"><a href="#">1</a></li>
+				<li><a href="#">2</a></li> -->
+				
+				
+				<c:forEach begin="1" end="${page.sumPage }" var="n">
+					<c:if test="${page.curPage == n }">
+						<li class="active"><a href="javascript:void(0)">${n }</a></li>
+					</c:if>
+					<c:if test="${page.curPage != n }">
+						<li><a href="${pageContext.request.contextPath}/product?method=findByCidInPages&curPage=${n}&cid=${param.cid}">${n }</a></li>
+					</c:if>
+				</c:forEach>
+				<!-- <li><a href="#">3</a></li>
 				<li><a href="#">4</a></li>
 				<li><a href="#">5</a></li>
 				<li><a href="#">6</a></li>
 				<li><a href="#">7</a></li>
 				<li><a href="#">8</a></li>
-				<li><a href="#">9</a></li>
-				<li>
-					<a href="#" aria-label="Next">
-						<span aria-hidden="true">&raquo;</span>
-					</a>
-				</li>
+				<li><a href="#">9</a></li> -->
+				<c:if test="${page.curPage == page.sumPage}">
+					<li class="disabled">
+						<a href="javascript:void(0)" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</c:if>
+				<c:if test="${page.curPage != page.sumPage}">
+					<li>
+						<a href="${pageContext.request.contextPath}/product?method=findByCidInPages&curPage=${page.curPage+1}&cid=${param.cid}" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</c:if>
 			</ul>
 		</div>
 		<!-- 分页结束=======================        -->

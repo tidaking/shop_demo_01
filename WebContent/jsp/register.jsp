@@ -101,10 +101,30 @@ font {
 
 <%@ page language="java" import="java.util.*"%>  
 <%  
- 	double d = Math.random();  
-	String session_commit_id = Double.toString(d);  
-	session.setAttribute("session_commit_id",session_commit_id);  
+ 	//double d = Math.random();  
+	//String session_commit_id = Double.toString(d);  
+	//session.setAttribute("session_commit_id",session_commit_id);  
 %>
+
+<script type="text/javascript">
+function regist()
+{
+	var rec = false;
+	$.get("${pageContext.request.contextPath}/checkReCommitServlet",{"method":"checkReCommit"}, function(result){
+		alert("result:"+result)
+		//console.log("result:"+result)
+		//attr("value",'11');
+		$("#form_commit_id").val(result);
+		alert("id:"+$("#form_commit_id").val())
+		rec = true;
+	},"text")
+
+	while(rec == null);
+
+	
+	
+}
+</script>
 
 
 <div class="container" style="width:100%;background:url('${pageContext.request.contextPath}/image/regist_bg.jpg');">
@@ -117,9 +137,10 @@ font {
 	<div style="color:red;">${msg }</div>
 	<div class="col-md-8" style="background:#fff;padding:40px 80px;margin:30px;border:7px solid #ccc;">
 		<font>会员注册</font>USER REGISTER
-		<form class="form-horizontal" style="margin-top:5px;" method="post" action="${pageContext.request.contextPath }/userServlet">
+		<form class="form-horizontal" style="margin-top:5px;" method="post" action="${pageContext.request.contextPath }/userServlet"  >
 			<input type="hidden" name="method" value="regist">
-			<input type="hidden" name="form_commit_id" value="<%=session_commit_id%>"> 
+			<%-- <input type="hidden" name="form_commit_id" value="<%=session_commit_id%>">  --%>
+			<input type="hidden" name="form_commit_id" id="form_commit_id" >
 			 <div class="form-group">
 			    <label for="username" class="col-sm-2 control-label">用户名</label>
 			    <div class="col-sm-6">
@@ -182,6 +203,7 @@ font {
 			 
 			  <div class="form-group">
 			    <div class="col-sm-offset-2 col-sm-10">
+			    	
 			      <input type="submit"  width="100" value="注册" name="submit" border="0"
 				    style="background: url('${pageContext.request.contextPath}/images/register.gif') no-repeat scroll 0 0 rgba(0, 0, 0, 0);
 				    height:35px;width:100px;color:white;">

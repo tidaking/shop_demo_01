@@ -99,16 +99,16 @@
 
 				<div style="margin:0 auto;width:950px;">
 					<div class="col-md-6">
-						<img style="opacity: 1;width:400px;height:350px;" title="" class="medium" src="${pageContext.request.contextPath}/image/r___________renleipic_01/bigPic5f3622b8-028a-4e62-a77f-f41a16d715ed.jpg">
+						<img style="opacity: 1;width:400px;height:350px;" title="" class="medium" src="${pageContext.request.contextPath}/${product.pimage}">
 					</div>
 
 					<div class="col-md-6">
-						<div><strong>大冬瓜</strong></div>
+						<div><strong>${product.pname }</strong></div>
 						<div style="border-bottom: 1px dotted #dddddd;width:350px;margin:10px 0 10px 0;">
-							<div>编号：751</div>
+							<div>编号：${product.pid }</div>
 						</div>
 
-						<div style="margin:10px 0 10px 0;">亿家价: <strong style="color:#ef0101;">￥：4.78元/份</strong> 参 考 价： <del>￥6.00元/份</del>
+						<div style="margin:10px 0 10px 0;">亿家价: <strong style="color:#ef0101;">￥：${product.shop_price }元/份</strong> 参 考 价： <del>￥${product.market_price }元/份</del>
 						</div>
 
 						<div style="margin:10px 0 10px 0;">促销: <a target="_blank" title="限时抢购 (2014-07-30 ~ 2015-01-01)" style="background-color: #f07373;">限时抢购</a> </div>
@@ -133,7 +133,7 @@
 					</div>
 
 					<div>
-						<img src="${pageContext.request.contextPath}/image/r___________renleipic_01/bigPic139f030b-d68b-41dd-be6d-b94cc568d3c5.jpg">
+						<img src="${pageContext.request.contextPath}/${product.pimage}">
 					</div>
 
 					<div style="background-color:#d3d3d3;width:930px;padding:10px 10px;margin:10px 0 10px 0;">
