@@ -132,13 +132,13 @@ public class UserServlet extends BaseServlet{
 			valid_commit_flag = session_commit_id.equals(form_commit_id);
 		}
 
-		valid_commit_flag = true;// TODO:patch for bugClose_id:#8
+		//valid_commit_flag = true;// TODO:patch for bugClose_id:#8
 		if(valid_commit_flag == true)//说明是不是重复提交
 		{
-			System.out.println("[UserServlet][regist]:不是重复提交");
+			System.out.println("[UserServlet][regist]:Not ReSubmit");
 		}
 		else {
-			System.out.println("[UserServlet][regist]:重复提交");
+			System.out.println("[UserServlet][regist]:ReSubmit,Not Going to Regist");
 		}
 
 
@@ -196,7 +196,6 @@ public class UserServlet extends BaseServlet{
 			request.setAttribute("msg", "上一次操作已完结,请勿直接刷新页面");
 			return "/jsp/msg.jsp";
 		}
-
 	}
 
 	public String active(HttpServletRequest request,HttpServletResponse response) throws IOException {

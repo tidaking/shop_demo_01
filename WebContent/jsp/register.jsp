@@ -107,22 +107,12 @@ font {
 %>
 
 <script type="text/javascript">
-function regist()
+function checkReSubmit()
 {
-	var rec = false;
-	$.get("${pageContext.request.contextPath}/checkReCommitServlet",{"method":"checkReCommit"}, function(result){
-		alert("result:"+result)
-		//console.log("result:"+result)
-		//attr("value",'11');
-		$("#form_commit_id").val(result);
-		alert("id:"+$("#form_commit_id").val())
-		rec = true;
-	},"text")
-
-	while(rec == null);
-
-	
-	
+	$.getJSON("${pageContext.request.contextPath}/checkReCommitServlet",{"method":"checkReSubmit"}, function(result){
+		$("#form_commit_id").val(result.commit_id);
+		$("#form_regist_id").submit()
+	})
 }
 </script>
 
@@ -137,7 +127,7 @@ function regist()
 	<div style="color:red;">${msg }</div>
 	<div class="col-md-8" style="background:#fff;padding:40px 80px;margin:30px;border:7px solid #ccc;">
 		<font>会员注册</font>USER REGISTER
-		<form class="form-horizontal" style="margin-top:5px;" method="post" action="${pageContext.request.contextPath }/userServlet"  >
+		<form id="form_regist_id" class="form-horizontal" style="margin-top:5px;" method="post" action="${pageContext.request.contextPath }/userServlet"  >
 			<input type="hidden" name="method" value="regist">
 			<%-- <input type="hidden" name="form_commit_id" value="<%=session_commit_id%>">  --%>
 			<input type="hidden" name="form_commit_id" id="form_commit_id" >
@@ -204,7 +194,7 @@ function regist()
 			  <div class="form-group">
 			    <div class="col-sm-offset-2 col-sm-10">
 			    	
-			      <input type="submit"  width="100" value="注册" name="submit" border="0"
+			      <input type="button"  width="100" value="注册" name="btn_submit" border="0" onclick="checkReSubmit()"
 				    style="background: url('${pageContext.request.contextPath}/images/register.gif') no-repeat scroll 0 0 rgba(0, 0, 0, 0);
 				    height:35px;width:100px;color:white;">
 			    </div>
