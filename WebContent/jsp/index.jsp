@@ -17,17 +17,8 @@
 	<body>
 		<div class="container-fluid">
 
-			<!--
-            	时间：2015-12-30
-            	描述：菜单栏
-            -->
 			<%@ include file="header.jsp" %>
 
-			<!--
-            	作者：ci2713@163.com
-            	时间：2015-12-30
-            	描述：轮播条
-            -->
 			<div class="container-fluid">
 				<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
 					<!-- Indicators -->

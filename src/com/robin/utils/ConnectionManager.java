@@ -15,6 +15,8 @@ public class ConnectionManager {
 
 	private static ThreadLocal<Connection> t1 = new ThreadLocal<Connection>();
 
+	
+	
 	// 获取连接
 	public static Connection getConnectionByLocalThread() throws SQLException {
 		Connection connection = t1.get();

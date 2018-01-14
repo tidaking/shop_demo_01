@@ -24,7 +24,7 @@ public class BaseServlet extends HttpServlet {
 			
 			// 1.获取方法名
 			String method_name = request.getParameter("method");
-			System.out.println("method name:"+method_name);
+			System.out.println("[BaseServlet][method name]:"+method_name);
 			// 2.获取子类的字节码文件对象
 			Class clazz = this.getClass();
 			Method method = null;
@@ -57,8 +57,9 @@ public class BaseServlet extends HttpServlet {
 				request.getRequestDispatcher(path).forward(request, response);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("msg", "服务器异常!");
+			request.getRequestDispatcher("/jsp/msg.jsp").forward(request, response);
 		}
 	}
 }

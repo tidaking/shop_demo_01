@@ -11,9 +11,9 @@ public class Product {
 	private String pimage;
 	private Date pdate;
 	
-	private Integer is_hot;  //是否热门  1:热门    0:不热门
+	private Integer is_hot;  //是否热门  1:热门    0:不热门 Constanct.PRODUCT_IS_HOT
 	private String pdesc;
-	private Integer pflag;	//是否下架    1:下架	0:未下架
+	private Integer pflag;	//是否下架    1:下架	0:未下架Constanct.PRODUCT_ONSALE
 	
 	
 	private Category category;

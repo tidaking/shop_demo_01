@@ -53,12 +53,9 @@ public class ProductDaoImpl implements ProductDao {
 			sumPage = count/curSize +1;
 		}
 		
-		System.out.println("count:"+count);
-		System.out.println("sumPage:"+sumPage);
-		System.out.println("curSize:"+curSize);
 		if(curPage > sumPage)
 		{
-			System.out.println("页码超出范围");
+			System.out.println("[ProductDao]:request curPage("+curPage+") is larger than sumPage("+sumPage+")");
 			return null;
 		}
 
@@ -70,8 +67,6 @@ public class ProductDaoImpl implements ProductDao {
 
 		a = (curPage - 1)*curSize;
 		b = curSize;
-		System.out.println("a:"+a);
-		System.out.println("b:"+b);
 		String sql = "select * from product where cid=? limit ?,? ";
 		List<Product> list = runner.query(sql, new BeanListHandler<>(Product.class),cid,a,b);
 

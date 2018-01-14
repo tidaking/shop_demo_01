@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -34,11 +35,11 @@
 						</ol>
 					</c:if>	
 					
-					<c:if test="${empty user }">
+					<c:if test="${empty user}">
 						<ol class="list-inline">
 							<li><a href="${pageContext.request.contextPath }/userServlet?method=loginUI">登录</a></li>
 							<li><a href="${pageContext.request.contextPath }/userServlet?method=registUI">注册</a></li>
-							<li><a href="cart.htm">购物车</a></li>
+							<li><a href="${pageContext.request.contextPath }/jsp/cart.jsp">购物车</a></li>
 						</ol>
 					</c:if>	
 				</div>
@@ -58,7 +59,7 @@
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 							</button>
-							<a class="navbar-brand" href="#">首页</a>
+							<a class="navbar-brand" href="${pageContext.request.contextPath }/index?method=gotoIndex">首页</a>
 						</div>
 
 						<!-- Collect the nav links, forms, and other content for toggling -->

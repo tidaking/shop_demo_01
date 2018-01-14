@@ -50,7 +50,7 @@ public class ProductServlet extends BaseServlet {
 		}
 		else
 		{
-			request.setAttribute("msg", "没有这类商品哦");
+			request.setAttribute("msg", "该分类下没有商品");
 			return "/jsp/msg.jsp";
 		}
 	}
