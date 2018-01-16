@@ -11,8 +11,8 @@ public class Constant {
 	public static final int PRODUCT_NOT_ONSALE = 0;
 	
 	
-	public static final int PAGE_PAGE_SIZE = 12;
-	
+	public static final int PRODUCT_PAGE_SIZE = 12;
+	public static final int ORDER_PAGE_SIZE = 3;
 	
 	
 	public static final int ORDER_UNPAYED = 0;//订单状态 0:未付款	1:已付款	2:已发货	3.已完成

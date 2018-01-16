@@ -15,6 +15,18 @@ public class CategoryServiceImpl implements CategoryService {
 		CategoryDao dao = new CategoryDaoImpl();
 		return dao.getAllCategory();
 	}
+
+	@Override
+	public boolean addCategory(String cname) throws SQLException {
+		CategoryDao categoryDao = new CategoryDaoImpl();
+		return categoryDao.addCategory(cname);
+	}
+
+	@Override
+	public Category findCategoryByCid(String cid) throws SQLException {
+		CategoryDao categoryDao = new CategoryDaoImpl();
+		return categoryDao.getCategoryByCid(cid);
+	}
 	
 	
 }

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.robin.utils.LogUtils;
+
 /**
  * Servlet基类
  */
@@ -24,7 +26,7 @@ public class BaseServlet extends HttpServlet {
 			
 			// 1.获取方法名
 			String method_name = request.getParameter("method");
-			System.out.println("[BaseServlet][method name]:"+method_name);
+			LogUtils.info(this.getClass().getName()+":"+method_name);
 			// 2.获取子类的字节码文件对象
 			Class clazz = this.getClass();
 			Method method = null;
@@ -37,13 +39,13 @@ public class BaseServlet extends HttpServlet {
 				}
 				else
 				{
-					System.out.println("[BaseServlet]:method = null!Redirect to index.jsp");
+					LogUtils.error("method = null!Redirect to index.jsp");
 					response.sendRedirect(request.getContextPath()+"/jsp/index.jsp");
 				}
 			}
 			else
 			{
-				System.out.println("[BaseServlet]:Not Found Class!");
+				LogUtils.error("Not Found Class");
 			}
 			// 4.通过反射,子类调用自己的方法,获取需要转发的路径
 			String path = null;
@@ -57,6 +59,7 @@ public class BaseServlet extends HttpServlet {
 				request.getRequestDispatcher(path).forward(request, response);
 			}
 		} catch (Exception e) {
+			LogUtils.error("BaseServlet exception..");
 			e.printStackTrace();
 			request.setAttribute("msg", "服务器异常!");
 			request.getRequestDispatcher("/jsp/msg.jsp").forward(request, response);

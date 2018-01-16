@@ -21,6 +21,7 @@ import com.robin.utils.JsonUtil;
 public class ProductServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	
+	//header.jsp用以按照分类查询商品,并分页展示到product_list.jsp中
 	public String findByCidInPages(HttpServletRequest request,HttpServletResponse response)
 	{
 		System.out.println("[ProductServlet]:findByCidInPages");

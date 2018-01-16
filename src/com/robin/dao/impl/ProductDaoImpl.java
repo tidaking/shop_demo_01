@@ -13,6 +13,7 @@ import com.robin.bean.Product;
 import com.robin.constant.Constant;
 import com.robin.dao.ProductDao;
 import com.robin.utils.C3P0Utils;
+import com.robin.utils.LogUtils;
 
 public class ProductDaoImpl implements ProductDao {
 
@@ -43,7 +44,7 @@ public class ProductDaoImpl implements ProductDao {
 		int a,b;
 		int count = getProductConut(cid);
 		int sumPage = 0;
-		int curSize = Constant.PAGE_PAGE_SIZE;
+		int curSize = Constant.PRODUCT_PAGE_SIZE;
 		if(count % curSize == 0)
 		{
 			sumPage = count/curSize;//TODO:dont write hard code
@@ -81,5 +82,40 @@ public class ProductDaoImpl implements ProductDao {
 		String sql = "select count(*) from product where cid=?";
 		Long count = (Long) runner.query(sql, new ScalarHandler(),cid);
 		return count.intValue();
+	}
+
+	@Override
+	public List<Product> getAllProducts() throws SQLException {
+		QueryRunner runner = new QueryRunner(C3P0Utils.getDataSource());
+		String sql = "select * from product";
+		return runner.query(sql, new BeanListHandler<>(Product.class));
+	}
+
+	@Override
+	public boolean addProduct(Product product) throws SQLException {
+		
+		/*`pid` VARCHAR(32) NOT NULL,
+		  `pname` VARCHAR(50) DEFAULT NULL,
+		  `market_price` DOUBLE DEFAULT NULL,
+		  `shop_price` DOUBLE DEFAULT NULL,
+		  `pimage` VARCHAR(200) DEFAULT NULL,
+		  `pdate` DATE DEFAULT NULL,
+		  `is_hot` INT(11) DEFAULT NULL,
+		  `pdesc` VARCHAR(255) DEFAULT NULL,
+		  `pflag` INT(11) DEFAULT NULL,
+		  `cid` VARCHAR(32) DEFAULT NULL,*/
+		QueryRunner runner = new QueryRunner(C3P0Utils.getDataSource());
+		String sql = "insert into product values(?,?,?,?,?,?,?,?,?,?)";
+		Object[] params = {product.getPid(),product.getPname(),product.getMarket_price(),
+							product.getShop_price(),product.getPimage(),product.getPdate(),
+							product.getIs_hot(),product.getPdesc(),product.getPflag(),
+							product.getCategory().getCid()};
+		int update = runner.update(sql, params);
+		if(update != 1)
+		{
+			LogUtils.error("Database update "+update+" lines");
+			return false;
+		}
+		return true;
 	}
 }

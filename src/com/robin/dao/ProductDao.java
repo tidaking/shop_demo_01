@@ -18,4 +18,8 @@ public interface ProductDao {
 	
 	public int getProductConut(String cid) throws SQLException;
 
+	public List<Product> getAllProducts() throws SQLException;
+
+	public boolean addProduct(Product product) throws SQLException;
+
 }

@@ -16,4 +16,8 @@ public interface ProductService {
 
 	public PageBean<Product> findByCidInPages(String cid, int curPage) throws SQLException;
 
+	public List<Product> findAll() throws SQLException;
+
+	public boolean addProduct(Product product) throws SQLException;
+
 }

@@ -30,8 +30,8 @@
 						<ol class="list-inline">
 							<li>尊敬的会员,${user.name }</li>
 							<li><a href="${pageContext.request.contextPath }/userServlet?method=logout">注销</a></li>
-							<li><a href="#">我的订单</a></li>
-							<li><a href="cart.htm">购物车</a></li>
+							<li><a href="${pageContext.request.contextPath }/order?method=findOrderInPage&curPage=1">我的订单</a></li>
+							<li><a href="#">购物车</a></li>
 						</ol>
 					</c:if>	
 					

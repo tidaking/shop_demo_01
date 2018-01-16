@@ -35,4 +35,16 @@ public class ProductServiceImpl implements ProductService {
 		return dao.getProducts(cid,curPage);
 	}
 
+	@Override
+	public List<Product> findAll() throws SQLException {
+		ProductDao productDao = new ProductDaoImpl();
+		return productDao.getAllProducts();
+	}
+
+	@Override
+	public boolean addProduct(Product product) throws SQLException {
+		ProductDao productDao = new ProductDaoImpl();
+		return productDao.addProduct(product);
+	}
+
 }

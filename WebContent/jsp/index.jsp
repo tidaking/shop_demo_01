@@ -80,10 +80,12 @@
 						</a>
 					</div>
 					
-					<c:if test="${empty hot_list }">
+					<%-- <c:if test="${empty hot_list }"> --%>
+				    <c:if test="${0 != 0 }">
 						<% request.getRequestDispatcher("/product?method=findHotestProduct").forward(request, response); %>
 					</c:if>
-					<c:if test="${not empty hot_list }">
+					<%-- <c:if test="${not empty hot_list }"> --%>
+					<c:if test="${0 != 0 }">
 						<c:forEach items="${hot_list }" var="p">
 							<div class="col-md-2" style="text-align:center;height:200px;padding:10px 0px;">
 								<a href="${pageContext.request.contextPath}/product?method=findByPid&pid=${p.pid}">
@@ -122,10 +124,12 @@
 							<img src="${pageContext.request.contextPath}/products/hao/middle01.jpg" width="516px" height="200px" style="display: inline-block;">
 						</a>
 					</div>
-					<c:if test="${empty new_list }">
+					<%-- <c:if test="${empty new_list }"> --%>
+					<c:if test="${0 != 0 }">
 						<% request.getRequestDispatcher("/product?method=findLatestProduct").forward(request, response); %>
 					</c:if>
-					<c:if test="${not empty new_list }">
+					<%-- <c:if test="${not empty new_list }"> --%>
+					<c:if test="${0 != 0 }">
 						<c:forEach items="${new_list }" var="p">
 							<div class="col-md-2" style="text-align:center;height:200px;padding:10px 0px;">
 								<a href="${pageContext.request.contextPath}/product?method=findByPid&pid=${p.pid}">
