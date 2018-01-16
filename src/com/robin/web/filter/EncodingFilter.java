@@ -38,6 +38,15 @@ public class EncodingFilter implements Filter {
 		HttpServletResponse response=(HttpServletResponse) resp;
 		
 		//2.放行
+		Map<String, String[]> map = request.getParameterMap();
+		LogUtils.debug("map size:"+map.size());
+		
+		for (String key : map.keySet()) {
+			for(String value:map.get(key))
+			{
+				LogUtils.debug(key+":"+value);
+			}
+		}
 		chain.doFilter(new MyRequest(request), response);
 	}
 
@@ -56,13 +65,18 @@ class MyRequest extends HttpServletRequestWrapper{
 	public MyRequest(HttpServletRequest request) {
 		super(request);
 		this.request=request;
+		LogUtils.debug(super.getClass().getName());
+		LogUtils.debug(this.getClass().getName());
 	}
 	
 	@Override
 	public String getParameter(String name) {  
+		//LogUtils.debug(name);
+		//LogUtils.debug(super.getParameter(name));
 		if(name==null || name.trim().length()==0){
 			return null;
 		}
+		//LogUtils.debug(super.getParameterValues(name)[0]);
 		String[] values = getParameterValues(name);
 		if(values==null || values.length==0){
 			return null;
@@ -99,25 +113,56 @@ class MyRequest extends HttpServletRequestWrapper{
 		 * 若为get 将map中的值遍历编码就可以了
 		 */
 		String method = request.getMethod();
-		if("post".equalsIgnoreCase(method)){
-			try {
+		if("post".equalsIgnoreCase(method))
+		{
+			try 
+			{
 				request.setCharacterEncoding("utf-8");
 				return request.getParameterMap();
-			} catch (UnsupportedEncodingException e) {
+			} 
+			catch (UnsupportedEncodingException e) 
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}else if("get".equalsIgnoreCase(method)){
+		}
+		else if("get".equalsIgnoreCase(method))
+		{
+			LogUtils.debug("get 111:"+request);
 			Map<String,String[]> map = request.getParameterMap();
-			if(flag){
-				for (String key:map.keySet()) {
+			if(map == null)
+			{
+				LogUtils.debug("null");
+			}
+			LogUtils.debug(map.size()+"");
+			for (String key : map.keySet()) {
+				for(String value:map.get(key))
+				{
+					LogUtils.debug(key+":"+value);
+				}
+			}
+			LogUtils.debug("request try get method:"+request.getParameter("method"));
+			LogUtils.debug("super try get method:"+super.getParameter("method"));
+			//LogUtils.debug("this try get method:"+this.getParameter("method"));
+			LogUtils.debug("super:"+super.getClass().getName());
+			LogUtils.debug("this:"+this.getClass().getName());
+			LogUtils.debug("request:"+request.getClass().getName());
+			
+			if(flag)
+			{
+				for (String key:map.keySet()) 
+				{
 					String[] arr = map.get(key);
 					//继续遍历数组
-					for(int i=0;i<arr.length;i++){
+					for(int i=0;i<arr.length;i++)
+					{
 						//编码
-						try {
+						try 
+						{
 							arr[i]=new String(arr[i].getBytes("iso8859-1"),"utf-8");
-						} catch (UnsupportedEncodingException e) {
+						} 
+						catch (UnsupportedEncodingException e) 
+						{
 							e.printStackTrace();
 						}
 					}
@@ -125,10 +170,16 @@ class MyRequest extends HttpServletRequestWrapper{
 				flag=false;
 			}
 			//需要遍历map 修改value的每一个数据的编码
-			
+			LogUtils.debug("return  111");
+			for (String key : map.keySet()) {
+				for(String value:map.get(key))
+				{
+					LogUtils.debug(key+":"+value);
+				}
+			}
 			return map;
 		}
-		
+		LogUtils.debug("return");
 		return super.getParameterMap();
 	}
 	

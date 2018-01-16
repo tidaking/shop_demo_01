@@ -13,7 +13,7 @@ public class DebugLogListener implements ServletContextListener {
 
 
     public void contextInitialized(ServletContextEvent arg0)  { 
-    	LogUtils.setLevel(LogUtils.INFO);
+    	LogUtils.setLevel(LogUtils.DEBUG);
     }
 
     public void contextDestroyed(ServletContextEvent arg0)  { 
