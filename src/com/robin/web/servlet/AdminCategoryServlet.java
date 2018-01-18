@@ -28,6 +28,7 @@ public class AdminCategoryServlet extends BaseServlet
 	public String addCategory(HttpServletRequest request,HttpServletResponse response) {
 		try {
 			String cname = request.getParameter("cname");
+			
 			CategoryService categoryService = new CategoryServiceImpl();
 			boolean ret = categoryService.addCategory(cname);
 			if(ret != true)

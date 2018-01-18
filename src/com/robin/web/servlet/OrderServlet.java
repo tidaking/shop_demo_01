@@ -176,18 +176,13 @@ public class OrderServlet extends BaseServlet {
 	
 	//删除订单
 	public String delOrder(HttpServletRequest request,HttpServletResponse response) {
-		System.out.println("22222");
-		request.setAttribute("msg", "FUCK!");
+		//System.out.println("22222");
+		//request.setAttribute("msg", "FUCK!");
 		return "/jsp/msg.jsp";
 	}
 	
 	//为订单付款订单
 	public String payOrder(HttpServletRequest request,HttpServletResponse response) throws Exception {
-		System.out.println("1111111");
-		if(1 != 1)
-		{
-			return null;
-		}
 		String oid = request.getParameter("oid");
 		String name = request.getParameter("name");
 		String telephone = request.getParameter("telephone");

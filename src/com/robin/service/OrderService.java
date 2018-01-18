@@ -19,4 +19,6 @@ public interface OrderService {
 	public Order findOrderByOid(String oid) throws Exception;
 
 	public boolean updateOrder(Order order) throws Exception;
+
+	public PageBean<Order> findOrderByState(String state, int curPage) throws SQLException;
 }

@@ -83,8 +83,12 @@
 					<c:if test="${empty hot_list }">
 				    <%-- <c:if test="${0 != 0 }"> --%>
 						<% 
-							System.out.println("11111");
-							request.getRequestDispatcher("/product?method=findHotestProduct").forward(request, response); 
+							//System.out.println("11111 before uri:"+request.getRequestURI());
+							//jsp 编译成servlet.class 
+							//request.getRequestDispatcher("/product?method=findHotestProduct").forward(request, response); 
+							//System.out.println("2222 request class name"+request.getClass().getName());
+							//System.out.println("22222 after uri:"+request.getRequestURI());
+							//return;
 						%>
 					</c:if>
 					<c:if test="${not empty hot_list }">
@@ -129,7 +133,10 @@
 					</div>
 					<c:if test="${empty new_list }">
 					<%-- <c:if test="${0 != 0 }"> --%>
-						<% System.out.println("222222");request.getRequestDispatcher("/product?method=findLatestProduct").forward(request, response); %>
+						<% 
+							//System.out.println("222222");
+							//request.getRequestDispatcher("/product?method=findLatestProduct").forward(request, response); 
+						%>
 					</c:if>
 					<c:if test="${not empty new_list }">
 					<%-- <c:if test="${0 != 0 }"> --%>

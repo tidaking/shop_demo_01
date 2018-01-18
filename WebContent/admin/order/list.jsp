@@ -5,7 +5,29 @@
 		<meta http-equiv="Content-Language" content="zh-cn">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link href="${pageContext.request.contextPath}/css/Style1.css" rel="stylesheet" type="text/css" />
-		
+		<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath }/js/layer/layer.js"></script>
+		<script type="text/javascript">
+			function showOrderItem(oid) {
+				var str = "<table border='1' width='100%' height='100%'><tr><td>商品图片</td><td>商品名称</td><td>购买数量</td></tr>";
+				$.getJSON("${pageContext.request.contextPath}/adminOrder", {"method":"findItemByOid","oid":oid},function(result){
+					$(result).each(function(i,obj) {
+						str += "<tr><td><img src='${pageContext.request.contextPath}/"+obj.product.pimage+"' width='100px' height='80px'></td><td>"+obj.product.pname+"</td><td>"+obj.count+"</td></tr>"
+					})
+					str+="</table>";
+					layer.open({
+				        type: 1,//0:信息框; 1:页面; 2:iframe层;	3:加载层;	4:tip层
+				        title:"订单详情",//标题
+				        area: ['400px', '300px'],//大小
+				        shadeClose: true, //点击弹层外区域 遮罩关闭
+				        content: str//内容
+				    });
+				})
+			}
+
+		</script>
+	
+	
 	</HEAD>
 	<body>
 		<br>
@@ -45,7 +67,7 @@
 										订单详情
 									</td>
 								</tr>
-								<c:forEach items="${list }" var="o" varStatus="vs">
+								<c:forEach items="${page.list }" var="o" varStatus="vs">
 										<tr>
 											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
 												width="18%">
@@ -69,7 +91,7 @@
 													未付款
 												</c:if>
 												<c:if test="${o.state == 1 }">
-													<a href="">等待发货</a>
+													<a href="${ pageContext.request.contextPath }/adminOrder?method=updateState&state=2&oid=${o.oid}">去发货</a>
 												</c:if>
 												<c:if test="${o.state == 2 }">
 													等待确认收货
@@ -80,7 +102,7 @@
 											
 											</td>
 											<td align="center" style="HEIGHT: 22px">
-												<input type="button" value="订单详情" />
+												<input type="button" value="订单详情" onclick="showOrderItem('${o.oid}')"/>
 												<div id="divId">
 													
 												</div>
@@ -93,15 +115,15 @@
 					</tr>
 					<tr align="center">
 						<td colspan="7">
-							第<s:property value="pageBean.page"/>/<s:property value="pageBean.totalPage"/>页 
-							<s:if test="pageBean.page != 1">
-								<a href="${ pageContext.request.contextPath }/adminOrder_findAll.action?page=1">首页</a>|
-								<a href="${ pageContext.request.contextPath }/adminOrder_findAll.action?page=<s:property value="pageBean.page-1"/>">上一页</a>|
-							</s:if>
-							<s:if test="pageBean.page != pageBean.totalPage">
-								<a href="${ pageContext.request.contextPath }/adminOrder_findAll.action?page=<s:property value="pageBean.page+1"/>">下一页</a>|
-								<a href="${ pageContext.request.contextPath }/adminOrder_findAll.action?page=<s:property value="pageBean.totalPage"/>">尾页</a>|
-							</s:if>
+							第${page.curPage }页 
+							<c:if test="${page.curPage != 1}">
+								<a href="${ pageContext.request.contextPath }/adminOrder?method=findByState&curPage=1&state=${state}">首页</a>|
+								<a href="${ pageContext.request.contextPath }/adminOrder?method=findByState&curPage=${page.curPage-1}&state=${state}">上一页</a>|
+							</c:if>
+							<c:if test="${page.curPage != page.sumPage}">
+								<a href="${ pageContext.request.contextPath }/adminOrder?method=findByState&curPage=${page.curPage+1}&state=${state}">下一页</a>|
+								<a href="${ pageContext.request.contextPath }/adminOrder?method=findByState&curPage=${page.sumPage}&state=${state}">尾页</a>|
+							</c:if>
 						</td>
 					</tr>
 				</TBODY>

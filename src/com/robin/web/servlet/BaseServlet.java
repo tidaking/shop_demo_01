@@ -40,6 +40,7 @@ public class BaseServlet extends HttpServlet {
 				else
 				{
 					LogUtils.error("method = null!Redirect to index.jsp");
+					//LogUtils.error("method = null!Redirect to msg.jsp");
 					response.sendRedirect(request.getContextPath()+"/jsp/index.jsp");
 				}
 			}

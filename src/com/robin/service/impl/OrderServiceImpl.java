@@ -56,4 +56,10 @@ public class OrderServiceImpl implements OrderService {
 		OrderDao orderDao = new OrderDaoImpl();
 		return orderDao.updateOrder(order);
 	}
+
+	@Override
+	public PageBean<Order> findOrderByState(String state, int curPage) throws SQLException {
+		OrderDao orderDao = new OrderDaoImpl();
+		return orderDao.findOrderByState(state,curPage);
+	}
 }

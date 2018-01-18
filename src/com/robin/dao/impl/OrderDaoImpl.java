@@ -25,6 +25,8 @@ import com.robin.constant.Constant;
 import com.robin.dao.OrderDao;
 import com.robin.utils.C3P0Utils;
 import com.robin.utils.ConnectionManager;
+import com.robin.utils.LogUtils;
+import com.sun.org.apache.xerces.internal.util.EntityResolver2Wrapper;
 
 public class OrderDaoImpl implements OrderDao {
 
@@ -178,5 +180,51 @@ public class OrderDaoImpl implements OrderDao {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public PageBean<Order> findOrderByState(String state, int curPage) throws SQLException {
+		LogUtils.info("entry");
+		QueryRunner runner = new QueryRunner(C3P0Utils.getDataSource());
+		String sql = "select * from orders";
+		String sql_count = "select count(*) from orders";
+		
+		Long tempCount = (Long)runner.query(sql_count, new ScalarHandler());
+		int count = tempCount.intValue();
+		int sumPage = 0;
+		if(count % Constant.ADMIN_ORDER_PAGE_SIZE != 0)
+		{
+			sumPage = count / Constant.ADMIN_ORDER_PAGE_SIZE +1;
+		}else {
+			sumPage = count / Constant.ADMIN_ORDER_PAGE_SIZE;
+		}
+		
+		if(curPage > sumPage)
+		{
+			LogUtils.error("curPage is Out of Range!curPage:"+curPage+" sumPage:"+sumPage);
+			return null;
+		}
+		PageBean<Order> page = new PageBean<>();
+		page.setCount(count);
+		page.setCurPage(curPage);
+		page.setCurSize(Constant.ADMIN_ORDER_PAGE_SIZE);
+		
+		page.setSumPage(sumPage);
+		int a,b;
+		a = (curPage-1)*Constant.ADMIN_ORDER_PAGE_SIZE;
+		b = Constant.ADMIN_ORDER_PAGE_SIZE;
+		List<Order> list = new ArrayList<>();
+		if(state != null || "".equals(state))
+		{
+			sql += " where state=? limit ?,?";
+			list = runner.query(sql, new BeanListHandler<>(Order.class), state,a,b);
+		}else {
+			sql += " limit ?,?";
+			list = runner.query(sql, new BeanListHandler<>(Order.class),a,b);
+		}
+
+		page.setList(list);
+		LogUtils.info("exit");
+		return page;
 	}
 }

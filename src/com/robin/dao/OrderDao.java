@@ -23,5 +23,7 @@ public interface OrderDao {
 
 	public boolean updateOrder(Order order) throws Exception;
 
+	public PageBean<Order> findOrderByState(String state, int curPage) throws SQLException;
+
 
 }

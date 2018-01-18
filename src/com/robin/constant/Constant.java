@@ -19,6 +19,9 @@ public class Constant {
 	public static final int ORDER_PAYED = 1;
 	public static final int ORDER_DELIVERED = 2;
 	public static final int ORDER_FINISHED = 3;
+	
+	
+	public static final int ADMIN_ORDER_PAGE_SIZE = 20;
 
 	
 }
